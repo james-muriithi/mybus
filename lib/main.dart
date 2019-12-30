@@ -29,10 +29,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String _url =
+      'https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/?bus_id=1&show_booked_seats';
 
-  String _url = 'https://examinationcomplaint.theschemaqhigh.co.ke/HCI/api/book/?bus_id=1&show_booked_seats';
-
-  Future <List> _getSeats() async{
+  Future<List> _getSeats() async {
     var data = await http.get(_url);
 
     var jsonData = json.decode(data.body);
@@ -45,12 +45,10 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return seats;
-
   }
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -74,11 +72,40 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: InkWell(
                     child: ListTile(
                       leading: CircleAvatar(
-                        backgroundImage:
-                            new NetworkImage('https://media.istockphoto.com/vectors/side-seat-isolated-icon-on-white-background-auto-service-repair-car-vector-id1144131688?k=6&m=1144131688&s=612x612&w=0&h=NohT8qoBE7MT3HRISCIVWv5WttuxQIRXUg0dx4yFKeg='),
+                        backgroundImage: new NetworkImage(
+                            'https://media.istockphoto.com/vectors/side-seat-isolated-icon-on-white-background-auto-service-repair-car-vector-id1144131688?k=6&m=1144131688&s=612x612&w=0&h=NohT8qoBE7MT3HRISCIVWv5WttuxQIRXUg0dx4yFKeg='),
                       ),
-                      title: Text(snapshot.data[index]['fullname']),
-                      subtitle: Text(snapshot.data[index]['seat_no']),
+                      title: Text(
+                        snapshot.data[index]['fullname'],
+                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16.0),
+                      ),
+                      subtitle: Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.only(left: 10.0,top: 12.0),
+                            child: RichText(
+                                text: new TextSpan(
+                                  // Note: Styles for TextSpans must be explicitly defined.
+                                  // Child text spans will inherit styles from parent
+                                  style: new TextStyle(
+                                    fontSize: 12.0,
+                                    color: Colors.black.withOpacity(0.8),
+                                  ),
+                                  children: <TextSpan>[
+                                    new TextSpan(
+                                      text: 'Seat No: ',
+                                      style: new TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    new TextSpan(
+                                      text: snapshot.data[index]['seat_no'],
+                                    )
+                                  ],
+                                ),
+                              ),
+                          )
+                        ],
+                      )
                     ),
                     onTap: () {
                       // Navigator.push(
@@ -90,12 +117,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 );
               },
-
             );
           },
         ),
       ),
-     
     );
   }
 }
