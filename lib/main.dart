@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   // Child text spans will inherit styles from parent
                                   style: new TextStyle(
                                     fontSize: 12.0,
-                                    color: Colors.black.withOpacity(0.8),
+                                    color: Colors.black.withOpacity(0.7),
                                   ),
                                   children: <TextSpan>[
                                     new TextSpan(
@@ -99,6 +99,30 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ),
                                     new TextSpan(
                                       text: snapshot.data[index]['seat_no'],
+                                    )
+                                  ],
+                                ),
+                              ),
+                          ),
+
+                          Padding(
+                            padding: EdgeInsets.only(left: 15.0,top: 12.0),
+                            child: RichText(
+                                text: new TextSpan(
+                                  // Note: Styles for TextSpans must be explicitly defined.
+                                  // Child text spans will inherit styles from parent
+                                  style: new TextStyle(
+                                    fontSize: 12.0,
+                                    color: Colors.black.withOpacity(0.7),
+                                  ),
+                                  children: <TextSpan>[
+                                    new TextSpan(
+                                      text: 'Paid: ',
+                                      style: new TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    new TextSpan(
+                                      text: snapshot.data[index]['paid'] == 0? 'No': 'Yes',
                                     )
                                   ],
                                 ),
