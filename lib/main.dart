@@ -48,12 +48,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _myButton(bool a) {
-    return !a
+    return a
         ? ButtonTheme.bar(
             child: new ButtonBar(
               children: <Widget>[
                 new FlatButton(
-                  child: const Text('AlREADY PAID'),
+                  child: const Text('ALREADY PAID'),
                   color: Colors.green,
                   textColor: Colors.white,
                   onPressed: () {
@@ -70,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: const Text('SET PAID'),
                   color: Colors.blue,
                   textColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 10.0),
                   onPressed: () {
                     /* ... */
                   },
@@ -80,25 +81,27 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _myWidget(String label, String value) {
-    return Padding(
-      padding: EdgeInsets.only(left: 10.0, top: 12.0),
-      child: RichText(
-        text: new TextSpan(
-          // Note: Styles for TextSpans must be explicitly defined.
-          // Child text spans will inherit styles from parent
-          style: new TextStyle(
-            fontSize: 12.0,
-            color: Colors.black.withOpacity(0.7),
-          ),
-          children: <TextSpan>[
-            new TextSpan(
-              text: label + ' :',
-              style: new TextStyle(fontWeight: FontWeight.bold),
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.only(left: 10.0, top: 9.0),
+        child: RichText(
+          text: new TextSpan(
+            // Note: Styles for TextSpans must be explicitly defined.
+            // Child text spans will inherit styles from parent
+            style: new TextStyle(
+              fontSize: 12.5,
+              color: Colors.black.withOpacity(0.7),
             ),
-            new TextSpan(
-              text: value,
-            )
-          ],
+            children: <TextSpan>[
+              new TextSpan(
+                text: label + ' : ',
+                style: new TextStyle(fontWeight: FontWeight.bold),
+              ),
+              new TextSpan(
+                text: value,
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -145,21 +148,53 @@ class _MyHomePageState extends State<MyHomePage> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16.0),
                           ),
-                          subtitle: Row(
+                          subtitle: Column(
                             children: <Widget>[
-                              _myWidget(
-                                  "Seat No", snapshot.data[index]['seat_no']),
-                              _myWidget(
-                                  "Paid",
-                                  int.parse(snapshot.data[index]['paid']) == 0
-                                      ? 'No'
-                                      : 'Yes'),
+                              new Divider(
+                                color: Theme.of(context).accentColor,
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  _myWidget("Seat No",
+                                      snapshot.data[index]['seat_no']),
+                                  _myWidget(
+                                      "Paid",
+                                      int.parse(snapshot.data[index]['paid']) ==
+                                              0
+                                          ? 'No'
+                                          : 'Yes'),
+                                ],
+                              ),
+
+                              //row 2
+                              Row(
+                                children: <Widget>[
+                                  _myWidget(
+                                      "Email", snapshot.data[index]['email']),
+                                ],
+                              ),
+
+                              //row3
+                              Row(
+                                children: <Widget>[
+                                  _myWidget("Phone No",
+                                      snapshot.data[index]['phone']),
+                                ],
+                              ),
+
+                              //row4
+                              Row(
+                                children: <Widget>[
+                                  _myWidget("Id No",
+                                      snapshot.data[index]['id_number']),
+                                ],
+                              ),
                             ],
                           ),
                         ),
                         onTap: () {},
                       ),
-                      _myButton(snapshot.data[index]['paid'] == 1)
+                      _myButton(int.parse(snapshot.data[index]['paid']) == 1)
                     ],
                   ),
                 );
