@@ -12,4 +12,4 @@ A  flutter application to show the booked seats from my [booking site](https://j
 
 # Screenshot (day 3)
 ### Added ExpansionTile for more details, added on tap callback, RefrehIndicator and an onRefresh callback function, generated a build apk
-![Screenshot] (https://raw.githubusercontent.com/james-muriithi/mybus/master/screenshot3.jpg)
+![Screenshot](https://raw.githubusercontent.com/james-muriithi/mybus/master/screenshot3.jpg)
