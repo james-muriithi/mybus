@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'My Bus',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -134,11 +134,13 @@ class _MyHomePageState extends State<MyHomePage> {
     _seats = _getSeats();
   }
 
-  Future<void> _refresh() async {
-    setState(() {
-      _seats = this._getSeats();
-    });
-  }
+  Future<List> _refresh() async {
+    print("object");
+  setState(() {
+    _seats = _getSeats();
+  });
+  return _seats;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -148,20 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Container(
         child: RefreshIndicator(
-          onRefresh: () async {
-            await _getSeats().then((lA) {
-              if (lA is Future) {
-                setState(() {
-                  _seats = lA as Future<List>;
-                });
-                return;
-              } else {
-                return;
-              }
-            });
-
-            return;
-          },
+          onRefresh: _refresh,
           child: FutureBuilder<List>(
             future: this._seats,
             builder: (BuildContext context, AsyncSnapshot snapshot) {
