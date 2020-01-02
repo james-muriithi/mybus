@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -47,6 +47,63 @@ class _MyHomePageState extends State<MyHomePage> {
     return seats;
   }
 
+  Widget _myButton(bool a) {
+    return !a
+        ? ButtonTheme.bar(
+            child: new ButtonBar(
+              children: <Widget>[
+                new FlatButton(
+                  child: const Text('AlREADY PAID'),
+                  color: Colors.green,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    /* ... */
+                  },
+                ),
+              ],
+            ),
+          )
+        : ButtonTheme.bar(
+            child: new ButtonBar(
+              children: <Widget>[
+                new FlatButton(
+                  child: const Text('SET PAID'),
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  onPressed: () {
+                    /* ... */
+                  },
+                ),
+              ],
+            ),
+          );
+  }
+
+  Widget _myWidget(String label, String value) {
+    return Padding(
+      padding: EdgeInsets.only(left: 10.0, top: 12.0),
+      child: RichText(
+        text: new TextSpan(
+          // Note: Styles for TextSpans must be explicitly defined.
+          // Child text spans will inherit styles from parent
+          style: new TextStyle(
+            fontSize: 12.0,
+            color: Colors.black.withOpacity(0.7),
+          ),
+          children: <TextSpan>[
+            new TextSpan(
+              text: label + ' :',
+              style: new TextStyle(fontWeight: FontWeight.bold),
+            ),
+            new TextSpan(
+              text: value,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,75 +126,41 @@ class _MyHomePageState extends State<MyHomePage> {
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Card(
-                  child: InkWell(
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: new NetworkImage(
-                            'https://media.istockphoto.com/vectors/side-seat-isolated-icon-on-white-background-auto-service-repair-car-vector-id1144131688?k=6&m=1144131688&s=612x612&w=0&h=NohT8qoBE7MT3HRISCIVWv5WttuxQIRXUg0dx4yFKeg='),
-                      ),
-                      title: Text(
-                        snapshot.data[index]['fullname'],
-                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16.0),
-                      ),
-                      subtitle: Row(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(left: 10.0,top: 12.0),
-                            child: RichText(
-                                text: new TextSpan(
-                                  // Note: Styles for TextSpans must be explicitly defined.
-                                  // Child text spans will inherit styles from parent
-                                  style: new TextStyle(
-                                    fontSize: 12.0,
-                                    color: Colors.black.withOpacity(0.7),
-                                  ),
-                                  children: <TextSpan>[
-                                    new TextSpan(
-                                      text: 'Seat No: ',
-                                      style: new TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    new TextSpan(
-                                      text: snapshot.data[index]['seat_no'],
-                                    )
-                                  ],
-                                ),
-                              ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      InkWell(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.white70,
+                            child: CachedNetworkImage(
+                              placeholder: (context, url) =>
+                                  CircularProgressIndicator(),
+                              imageUrl:
+                                  'https://media.istockphoto.com/vectors/side-seat-isolated-icon-on-white-background-auto-service-repair-car-vector-id1144131688?k=6&m=1144131688&s=612x612&w=0&h=NohT8qoBE7MT3HRISCIVWv5WttuxQIRXUg0dx4yFKeg=',
+                            ),
                           ),
-
-                          Padding(
-                            padding: EdgeInsets.only(left: 15.0,top: 12.0),
-                            child: RichText(
-                                text: new TextSpan(
-                                  // Note: Styles for TextSpans must be explicitly defined.
-                                  // Child text spans will inherit styles from parent
-                                  style: new TextStyle(
-                                    fontSize: 12.0,
-                                    color: Colors.black.withOpacity(0.7),
-                                  ),
-                                  children: <TextSpan>[
-                                    new TextSpan(
-                                      text: 'Paid: ',
-                                      style: new TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    new TextSpan(
-                                      text: snapshot.data[index]['paid'] == 0? 'No': 'Yes',
-                                    )
-                                  ],
-                                ),
-                              ),
-                          )
-                        ],
-                      )
-                    ),
-                    onTap: () {
-                      // Navigator.push(
-                      //     context,
-                      //     new MaterialPageRoute(
-                      //         builder: (context) =>
-                      //             DetailPage(snapshot.data[index])));
-                    },
+                          title: Text(
+                            snapshot.data[index]['fullname'],
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16.0),
+                          ),
+                          subtitle: Row(
+                            children: <Widget>[
+                              _myWidget(
+                                  "Seat No", snapshot.data[index]['seat_no']),
+                              _myWidget(
+                                  "Paid",
+                                  int.parse(snapshot.data[index]['paid']) == 0
+                                      ? 'No'
+                                      : 'Yes'),
+                            ],
+                          ),
+                        ),
+                        onTap: () {},
+                      ),
+                      _myButton(snapshot.data[index]['paid'] == 1)
+                    ],
                   ),
                 );
               },
