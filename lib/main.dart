@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() => runApp(MyApp());
 
@@ -57,7 +58,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: Colors.green,
                   textColor: Colors.white,
                   onPressed: () {
-                    /* ... */
+                    Fluttertoast.showToast(
+                        msg: "Seat already paid for.",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM);
                   },
                 ),
               ],
@@ -120,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
             if (snapshot.data == null) {
               return Container(
                 child: Center(
-                  child: Text('loading....'),
+                  child: CircularProgressIndicator(),
                 ),
               );
             }
