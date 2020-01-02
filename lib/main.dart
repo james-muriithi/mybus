@@ -165,30 +165,34 @@ class _MyHomePageState extends State<MyHomePage> {
                                           : 'Yes'),
                                 ],
                               ),
-
-                              //row 2
-                              Row(
+                              ExpansionTile(
+                                title: Text("More details"),
                                 children: <Widget>[
-                                  _myWidget(
-                                      "Email", snapshot.data[index]['email']),
-                                ],
-                              ),
+                                  //row 2
+                                  Row(
+                                    children: <Widget>[
+                                      _myWidget("Email",
+                                          snapshot.data[index]['email']),
+                                    ],
+                                  ),
 
-                              //row3
-                              Row(
-                                children: <Widget>[
-                                  _myWidget("Phone No",
-                                      snapshot.data[index]['phone']),
-                                ],
-                              ),
+                                  //row3
+                                  Row(
+                                    children: <Widget>[
+                                      _myWidget("Phone No",
+                                          snapshot.data[index]['phone']),
+                                    ],
+                                  ),
 
-                              //row4
-                              Row(
-                                children: <Widget>[
-                                  _myWidget("Id No",
-                                      snapshot.data[index]['id_number']),
+                                  //row4
+                                  Row(
+                                    children: <Widget>[
+                                      _myWidget("Id No",
+                                          snapshot.data[index]['id_number']),
+                                    ],
+                                  ),
                                 ],
-                              ),
+                              )
                             ],
                           ),
                         ),
